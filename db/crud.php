@@ -30,6 +30,7 @@
                 return false;
             }
         }
+        // adding products to cart
             public function insertproduct($id,$name, $price, $description, $img,$email){
            try{ 
                $qty=1;
@@ -51,7 +52,7 @@
            }
             
         }
-
+// view products page
         public function getAllproducts(){
             try{
                 $sql = "SELECT id,name, price, description,img FROM `products` ";
@@ -63,6 +64,7 @@
            }
            
         }
+        // viewing cart items
         public function getAllcart($email){
             try{
                 $sql = "select * from cart where email= :email";
@@ -76,7 +78,7 @@
                 return false;
            }
         }
-           
+        //    viewing all orders
         public function getAllorder($email){
             try{
                 $sql = "select * from orders where email= :email";
@@ -90,7 +92,7 @@
                 return false;
            }
         }
-
+//  to view details of a single product
         public function getProductDetails($id){
             try{
                  $sql = "select * from products  where id = :id";
@@ -105,7 +107,7 @@
              }
          }
 
-         
+        //  total price
         public function getSum($email){
             try{
                  $sql = "select SUM(price) AS sum from cart where email = :email";
@@ -120,6 +122,7 @@
                  return false;
              }
          }
+
          public function getSum1($email){
             try{
                  $sql = "select SUM(price) AS sum from orders where email = :email";
@@ -135,19 +138,20 @@
              }
          }
 
-
-         public function deleteproduct($id){
-                   try{
-                        $sql = "delete from cart where id = :id";
-                        $stmt = $this->db->prepare($sql);
-                        $stmt->bindparam(':id', $id);
-                        $stmt->execute();
-                        return true;
-                    }catch (PDOException $e) {
-                        echo $e->getMessage();
-                        return false;
-                    }
-                }
+// delete product from cart
+public function deleteproduct($id){
+    try{
+        $sql = "delete from cart where id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindparam(':id', $id);
+        $stmt->execute();
+        return true;
+    }catch (PDOException $e) {
+        echo $e->getMessage();
+        return false;
+    }
+}
+// delete product from orders
                 public function deleteorder($id){
                     try{
                          $sql = "delete from orders where id = :id";
@@ -173,6 +177,8 @@
                          return false;
                      }
                  }
+
+                //  seraching an item
                  public function getSearch($Search){
                     try{
                          $sql = "SELECT id,name, price, description,img FROM `products`  where name like '%$Search%' ";
@@ -185,7 +191,7 @@
                          return false;
                      }
                  }
-
+//  adding review
                  public function insertReview($Name, $Email, $rate, $review){
                     try{ 
                      $sql= "INSERT INTO review (Name, Email, rate, review) VALUES (:Name,:Email, :rate, :review)";
@@ -202,6 +208,7 @@
                     }
                      
                  }
+                //  publish review in home page
                  public function getAllReview(){
                     try{
                         $sql = "SELECT Name, rate,review FROM `review` ";
@@ -213,56 +220,6 @@
                    }
                    
                 }
-
-
-
-
-
-        // public function getAllproducts($id){
-        //    try{
-        //         $sql = "select * from attendee a inner join specialties s on a.specialty_id = s.specialty_id 
-        //         where attendee_id = :id";
-        //         $stmt = $this->db->prepare($sql);
-        //         $stmt->bindparam(':id', $id);
-        //         $stmt->execute();
-        //         $result = $stmt->fetch();
-        //         return $result;
-        //    }catch (PDOException $e) {
-        //         echo $e->getMessage();
-        //         return false;
-        //     }
-        // }
-
-    //     public function deleteAttendee($id){
-    //        try{
-    //             $sql = "delete from attendee where attendee_id = :id";
-    //             $stmt = $this->db->prepare($sql);
-    //             $stmt->bindparam(':id', $id);
-    //             $stmt->execute();
-    //             return true;
-    //         }catch (PDOException $e) {
-    //             echo $e->getMessage();
-    //             return false;
-    //         }
-    //     }
-
-    //         //     public function getSpecialtyById($id){
-    //         try{
-    //             $sql = "SELECT * FROM `specialties` where specialty_id = :id";
-    //             $stmt = $this->db->prepare($sql);
-    //             $stmt->bindparam(':id', $id);
-    //             $stmt->execute();
-    //             $result = $stmt->fetch();
-    //             return $result;
-    //         }catch (PDOException $e) {
-    //             echo $e->getMessage();
-    //             return false;
-    //         }
-            
-    //     }
-
-
-        
 
     }
 ?>
